@@ -18,17 +18,10 @@ jobs:
           - debian
         dist_version: 
           - 9-builded
-          - 8-builded
         mongodb_version:
+          - '4.2'
           - '4.0'
           - '3.6'
-        include:
-          - distribution: debian
-            dist_version: 9-builded
-            mongodb_version: '4.2'
-          - distribution: debian
-            dist_version: 8-builded
-            mongodb_version: '3.4'
     env:
       DISTRIBUTION: ${{ matrix.distribution }}
       DIST_VERSION: ${{ matrix.dist_version }}

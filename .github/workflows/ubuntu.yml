@@ -26,15 +26,6 @@ jobs:
           - distribution: ubuntu
             dist_version: 16_04-builded
             mongodb_version: '3.6'
-          - distribution: ubuntu-upstart
-            dist_version: 14_04-builded
-            mongodb_version: '4.0'
-          - distribution: ubuntu-upstart
-            dist_version: 14_04-builded
-            mongodb_version: '3.6'
-          - distribution: ubuntu-upstart
-            dist_version: 14_04-builded
-            mongodb_version: '3.4'
     env:
       DISTRIBUTION: ${{ matrix.distribution }}
       DIST_VERSION: ${{ matrix.dist_version }}
