@@ -1,4 +1,6 @@
-# Ansible role for MongoDB [![Build Status](https://travis-ci.org/UnderGreen/ansible-role-mongodb.svg?branch=master)](https://travis-ci.org/UnderGreen/ansible-role-mongodb)
+# Ansible role for MongoDB ![Test ansible role on Amazon Linux](https://github.com/sportsru/ansible-role-mongodb/workflows/Test%20ansible%20role%20on%20Amazon%20Linux/badge.svg) ![Test ansible role on CentOS](https://github.com/sportsru/ansible-role-mongodb/workflows/Test%20ansible%20role%20on%20CentOS/badge.svg) ![Test ansible role on Debian](https://github.com/sportsru/ansible-role-mongodb/workflows/Test%20ansible%20role%20on%20Debian/badge.svg) ![Test ansible role on Ubuntu](https://github.com/sportsru/ansible-role-mongodb/workflows/Test%20ansible%20role%20on%20Ubuntu/badge.svg) 
+
+## Fork of [UnderGreen/ansible-role-mongodb](https://github.com/UnderGreen/ansible-role-mongodb)
 
 Ansible role which manages [MongoDB](http://www.mongodb.org/).
 
@@ -10,16 +12,14 @@ Ansible role which manages [MongoDB](http://www.mongodb.org/).
 
 MongoDB support matrix:
 
-| Distribution   | < MongoDB 3.2 |    MongoDB 3.4     |    MongoDB 3.6     |    MongoDB 4.0     |   MongoDB 4.2      |
-| -------------- | :-----------: | :----------------: | :----------------: | :----------------: | :----------------: |
-| Ubuntu 14.04   |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
+| Distribution   | < MongoDB 3.2 |    MongoDB 3.4     |    MongoDB 3.6     |    MongoDB 4.0     |    MongoDB 4.2     |
+| ---------------| :-----------: | :----------------: | :----------------: | :----------------: | :----------------: |
 | Ubuntu 16.04   |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | Ubuntu 18.04   |  :no_entry:   |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |
-| Debian 8.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |        :x:         |
 | Debian 9.x     |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| RHEL 6.x       |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| RHEL 7.x       |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Amazon Linux 2 |  :no_entry:   | :white_check_mark: |        :x:         | :white_check_mark: | :white_check_mark: |
+| CentOS 6.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| CentOS 7.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Amazon Linux 2 |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 - :white_check_mark: - fully tested, should works fine
 - :interrobang: - maybe works, not tested
@@ -236,4 +236,4 @@ Licensed under the GPLv2 License. See the [LICENSE.md](LICENSE.md) file for deta
 
 #### Feedback, bug-reports, requests, ...
 
-Are [welcome](https://github.com/UnderGreen/ansible-role-mongodb/issues)!
+Are [welcome](https://github.com/sportsru/ansible-role-mongodb/issues)!
