@@ -10,16 +10,23 @@ Ansible role which manages [MongoDB](http://www.mongodb.org/).
 - Provide handlers for restart and reload;
 - Setup MMS automation agent;
 
-MongoDB support matrix:
+MongoDB support matrix (`ansible_python_interpreter=python3`):
 
-| Distribution   | < MongoDB 3.2 |    MongoDB 3.4     |    MongoDB 3.6     |    MongoDB 4.0     |    MongoDB 4.2     |
-| ---------------| :-----------: | :----------------: | :----------------: | :----------------: | :----------------: |
-| Ubuntu 16.04   |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Ubuntu 18.04   |  :no_entry:   |        :x:         |        :x:         | :white_check_mark: | :white_check_mark: |
-| Debian 9.x     |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| CentOS 6.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| CentOS 7.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| Amazon Linux 2 |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Distribution   | < MongoDB 3.4 |    MongoDB 3.6     |    MongoDB 4.0     |    MongoDB 4.2     |
+| ---------------| :-----------: | :----------------: | :----------------: | :----------------: |
+| Ubuntu 18.04   |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: |
+| Debian 10.x    |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: |
+
+MongoDB support matrix (`ansible_python_interpreter=python`):
+
+| Distribution   | < MongoDB 3.4 |    MongoDB 3.6     |    MongoDB 4.0     |    MongoDB 4.2     |
+| ---------------| :-----------: | :----------------: | :----------------: | :----------------: |
+| Ubuntu 16.04   |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Ubuntu 18.04   |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: |
+| Debian 9.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| CentOS 6.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| CentOS 7.x     |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| Amazon Linux 2 |  :no_entry:   | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 - :white_check_mark: - fully tested, should works fine
 - :interrobang: - maybe works, not tested
@@ -35,7 +42,7 @@ MongoDB support matrix:
 mongodb_package: mongodb-org
 
 # You can control installed version via this param.
-# Should be '3.4', '3.6', '4.0' or '4.2'. This role doesn't support MongoDB < 3.4.
+# Should be '3.6', '4.0' or '4.2'. This role doesn't support MongoDB < 3.6.
 # I will recommend you to use latest version of MongoDB.
 mongodb_version: "4.2"
 
@@ -103,10 +110,8 @@ mongodb_replication_oplogsize: 1024 # specifies a maximum size in megabytes for 
 # Configure setParameter option.
 # Example :
 mongodb_set_parameters:
-  {
-    "enableLocalhostAuthBypass": "true",
-    "authenticationMechanisms": "SCRAM-SHA-1,MONGODB-CR",
-  }
+  "enableLocalhostAuthBypass": "true"
+  "authenticationMechanisms": "SCRAM-SHA-1,MONGODB-CR"
 
 ## Extend config with arbitrary values
 # Example :
@@ -170,22 +175,18 @@ Example vars for authorization:
 ```yaml
 mongodb_security_authorization: "enabled"
 mongodb_users:
-  - {
-    name: testUser,
-    password: passw0rd,
-    roles: readWrite,
+  - name: testUser
+    password: passw0rd
+    roles: readWrite
     database: app_development
-}
 ```
 
 Example vars for oplog user:
 
 ```yaml
 mongodb_oplog_users:
-  - {
-    user: oplog,
+  - user: oplog
     password: passw0rd
-}
 ```
 
 Required vars to change on production:
@@ -207,11 +208,9 @@ mongodb_login_host: 192.168.56.2
 
 # mongodb_replication_params should be configured on each replica set node
 mongodb_replication_params:
-  - {
-      host_name: 192.168.56.2,
-      host_port: "{{ mongodb_net_port }}",
-      host_type: replica,
-    }
+  - host_name: 192.168.56.2
+    host_port: "{{ mongodb_net_port }}"
+    host_type: replica
   # host_type can be replica(default) and arbiter
 ```
 

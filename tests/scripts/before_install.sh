@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 # -*- mode: sh; -*-
 
-# File: before_install.sh
-# Time-stamp: <2018-07-12 18:05:37>
-# Copyright (C) 2018 Sergei Antipov
-# Description:
-
 # set -o xtrace
 set -o nounset
 set -o errexit
@@ -54,24 +49,29 @@ set -eux; \
 export DOCKER_TLS_CERTDIR=/certs
 mkdir /certs /certs/client && chmod 1777 /certs /certs/client
 
-apk --update add --virtual build-dependencies libffi-dev openssl-dev python-dev build-base \
+apk --update add --virtual build-dependencies libffi-dev openssl-dev build-base \
   && pip install docker ansible mitogen \
-  && apk del --no-network build-dependencies
+  && apk del --no-network build-dependencies \
+  && apk add --no-cache bash
 
-cat << EOF > ansible.cfg
+if [ "${PYTHON_VERSION}" = '3' ]; then
+  cat << EOF > ansible.cfg
+[defaults]
+pipelining = True
+strategy = mitogen_linear
+strategy_plugins = /usr/local/lib/python3.8/site-packages/ansible_mitogen/plugins/strategy
+EOF
+else
+  cat << EOF > ansible.cfg
 [defaults]
 pipelining = True
 strategy = mitogen_linear
 strategy_plugins = /usr/local/lib/python2.7/site-packages/ansible_mitogen/plugins/strategy
 EOF
-
-# Pull docker image or build it
-if [ -f tests/Dockerfile.${DISTRIBUTION}_${DIST_VERSION} ]
-then
-    docker build --rm=true --file=tests/Dockerfile.${DISTRIBUTION}_${DIST_VERSION} --tag ${DISTRIBUTION}:${DIST_VERSION} tests
-else
-    docker pull ${DISTRIBUTION}:${DIST_VERSION}
 fi
 
-ln -s ${PWD} tests/greendayonfire.mongodb
+# Build docker image
+docker build --rm=true --file=tests/Dockerfile.${DISTRIBUTION}_${DIST_VERSION}_python${PYTHON_VERSION} --tag ${DISTRIBUTION}:${DIST_VERSION}_python${PYTHON_VERSION} tests
+
+ln -s ${PWD} tests/sportsru.mongodb
 

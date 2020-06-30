@@ -3,7 +3,6 @@ mongodb_repository:
   "4.2": "https://repo.mongodb.org/yum/amazon/2/mongodb-org/4.2/x86_64/"
   "4.0": "https://repo.mongodb.org/yum/amazon/2/mongodb-org/4.0/x86_64/"
   "3.6": "https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.6/x86_64/"
-  "3.4": "https://repo.mongodb.org/yum/amazon/2013.03/mongodb-org/3.4/x86_64/"
 
 mongodb_repository_gpgkey:
   "4.2": "https://www.mongodb.org/static/pgp/server-4.2.asc"
@@ -14,9 +13,9 @@ mongodb_pidfile_path: "{{ '/var/run/mongodb/mongod.pid' if ('mongodb-org' in mon
 
 yum_lock_timeout: 180
 
-mongodb_pymongo_package: "{{ 'python3-pymongo' if ansible_python_interpreter is search('python3') | bool else 'python-pymongo' }}"
+mongodb_pymongo_package: "python-pymongo"
 mongodb_pymongo_deps:
-  - "{{ 'python3-devel' if ansible_python_interpreter is search('python3') | bool else 'python-devel' }}"
-  - "{{ 'python3-pip' if ansible_python_interpreter is search('python3') | bool else 'python-pip' }}"
-mongodb_pip_executable: "{{ 'pip3' if ansible_python_interpreter is search('python3') | bool else 'pip' }}"
+  - "python-devel"
+  - "python-pip"
+mongodb_pip_executable: "pip"
 

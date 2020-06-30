@@ -183,10 +183,6 @@ else:
 #
 def check_compatibility(module, client):
     srv_info = client.server_info()
-    if LooseVersion(PyMongoVersion) <= LooseVersion('3.2'):
-        module.fail_json(msg='Note: you must use pymongo 3.2+')
-    if LooseVersion(srv_info['version']) >= LooseVersion('3.4') and LooseVersion(PyMongoVersion) <= LooseVersion('3.4'):
-        module.fail_json(msg='Note: you must use pymongo 3.4+ with MongoDB 3.4.x')
     if LooseVersion(srv_info['version']) >= LooseVersion('3.6') and LooseVersion(PyMongoVersion) <= LooseVersion('3.6'):
         module.fail_json(msg='Note: you must use pymongo 3.6+ with MongoDB 3.6.x')
 
@@ -291,17 +287,31 @@ def remove_host(module, client, host_name, timeout=180):
             time.sleep(5)
 
 def load_mongocnf():
-    config = ConfigParser.RawConfigParser()
-    mongocnf = os.path.expanduser('~/.mongodb.cnf')
+    if sys.version_info >= (3, 0):
+        config = configparser.RawConfigParser()
+        mongocnf = os.path.expanduser('~/.mongodb.cnf')
 
-    try:
-        config.readfp(open(mongocnf))
-        creds = dict(
-          user=config.get('client', 'user'),
-          password=config.get('client', 'pass')
-        )
-    except (ConfigParser.NoOptionError, IOError):
-        return False
+        try:
+            config.readfp(open(mongocnf))
+            creds = dict(
+              user=config.get('client', 'user'),
+              password=config.get('client', 'pass')
+            )
+        except (configparser.NoOptionError, IOError):
+            return False
+
+    else:
+        config = ConfigParser.RawConfigParser()
+        mongocnf = os.path.expanduser('~/.mongodb.cnf')
+
+        try:
+            config.readfp(open(mongocnf))
+            creds = dict(
+              user=config.get('client', 'user'),
+              password=config.get('client', 'pass')
+            )
+        except (ConfigParser.NoOptionError, IOError):
+            return False
 
     return creds
 
@@ -366,7 +376,7 @@ def main():
     )
 
     if not pymongo_found:
-        module.fail_json(msg='the python pymongo (>= 3.2) module is required')
+        module.fail_json(msg='the python pymongo (>= 3.6) module is required')
 
     login_user = module.params['login_user']
     login_password = module.params['login_password']

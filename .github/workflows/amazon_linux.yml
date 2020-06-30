@@ -9,7 +9,9 @@ on:
       - master
 
 jobs:
+
   python2:
+
     runs-on: ubuntu-latest
     container: python:2.7.18-alpine
     strategy:
@@ -22,20 +24,40 @@ jobs:
           - '4.2'
           - '4.0'
           - '3.6'
-          - '3.4'
     env:
       DISTRIBUTION: ${{ matrix.distribution }}
       DIST_VERSION: ${{ matrix.dist_version }}
       MONGODB_VERSION: ${{ matrix.mongodb_version }}
       DOCKER_PRIVILEGED: true
+      PYTHON_VERSION: '2'
+
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Prepare tests
         run: |
           apk add --no-cache bash
           bash tests/scripts/before_install.sh
-      - name: Run tests
-        run: bash tests/scripts/test.sh
 
+      - name: Run test on single host and security authorization disabled
+        run: bash tests/scripts/single.sh disabled python
+      - name: Run idempotence test and cleanup
+        run: bash tests/scripts/single_cleanup.sh disabled python
+
+      - name: Run test on single host and security authorization enabled
+        run: bash tests/scripts/single.sh enabled python
+      - name: Run idempotence test and cleanup
+        run: bash tests/scripts/single_cleanup.sh enabled python
+
+      - name: Run test replicaSet on three hosts and security authorization disabled
+        run: bash tests/scripts/rs.sh disabled python
+      - name: Run idempotence test and cleanup
+        run: bash tests/scripts/rs_cleanup.sh disabled python
+
+      - name: Run test replicaSet on three hosts and security authorization enabled
+        run: bash tests/scripts/rs.sh enabled python
+      - name: Run idempotence test and cleanup
+        run: bash tests/scripts/rs_cleanup.sh enabled python
 
