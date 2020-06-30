@@ -47,5 +47,5 @@
   become: yes
   gather_facts: yes
   roles:
-    - role: greendayonfire.mongodb
+    - role: sportsru.mongodb
 
