@@ -15,7 +15,7 @@ MongoDB support matrix (`ansible_python_interpreter=python3`):
 | Distribution   | < MongoDB 3.4 |    MongoDB 3.6     |    MongoDB 4.0     |    MongoDB 4.2     |
 | ---------------| :-----------: | :----------------: | :----------------: | :----------------: |
 | Ubuntu 18.04   |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: |
-| Debian 10.x    |  :no_entry:   |        :x:         | :white_check_mark: | :white_check_mark: |
+| Debian 10.x    |  :no_entry:   |        :x:         |        :x:         | :white_check_mark: |
 
 MongoDB support matrix (`ansible_python_interpreter=python`):
 
@@ -49,7 +49,6 @@ mongodb_version: "4.2"
 mongodb_pymongo_from_pip: true # Install latest PyMongo via PIP or package manager
 mongodb_pymongo_pip_version: 3.6.1 # Choose PyMong version to install from pip. If not set use latest
 mongodb_user_update_password: "on_create" # MongoDB user password update default policy
-mongodb_manage_service: true
 mongodb_manage_systemd_unit: true
 
 # Disable transparent hugepages on systemd debian based installations
