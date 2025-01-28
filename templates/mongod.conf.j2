@@ -9,6 +9,7 @@ net:
   ssl:
     mode: {{ mongodb_net_ssl_mode }}
     PEMKeyFile: {{ mongodb_net_ssl_pemfile }}
+    allowConnectionsWithoutCertificates: {{ mongodb_net_ssl_conn_without_certs }}
   {% endif -%}
   {% if mongodb_config['net'] is defined and mongodb_config['net'] is iterable -%}
   {% for item in mongodb_config['net'] -%}
@@ -101,18 +102,6 @@ operationProfiling:
   {{ item }}
   {% endfor %}
   {% endif %}
-
-{% if mongodb_major_version is version("4.0", ">=") -%}
-cloud:
-  monitoring:
-    free:
-      state: {{ mongodb_cloud_monitoring_free_state }}
-  {% if mongodb_config['cloud'] is defined and mongodb_config['cloud'] is iterable -%}
-  {% for item in mongodb_config['cloud'] -%}
-  {{ item }}
-  {% endfor %}
-  {% endif %}
-{% endif %}
 
 {% if mongodb_set_parameters -%}
 setParameter:
