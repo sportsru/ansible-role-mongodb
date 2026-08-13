@@ -59,7 +59,6 @@ mongodb_storage_quota_enforced: false            # Limits each database to a cer
 mongodb_storage_quota_maxfiles: 8                # Number of quota files per DB
 mongodb_storage_smallfiles: false                # Very useful for non-data nodes
 
-mongodb_storage_journal_enabled: true            # Enable journaling
 mongodb_storage_prealloc: true                   # Enable data file preallocation
 
 mongodb_wiredtiger_directory_for_indexes: false
